@@ -5,12 +5,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public class PhoneBookTest {
     PhoneBook phoneBook;
     @BeforeEach
-    void setUp() {
+    void setUp(List<String> names, boolean equals) {
         System.out.println("Начало теста");
          phoneBook = new PhoneBook();
     }
@@ -58,5 +59,19 @@ public class PhoneBookTest {
         phoneBook.add(name1, number1);
         phoneBook.add(name2, number2);
         Assertions.assertEquals(expected, phoneBook.findByName(name1));
+    }
+    public static Stream<Arguments> sourcePrintNames() {
+        return Stream.of(
+                Arguments.of(List.of("Валера", "Игорь"), "Валера", "+7(905) 999-10-12", "Игорь", "+7(905) 999-20-20"),
+                Arguments.of(List.of("Валера", "Игорь"), "Игорь", "+7(905) 999-10-12", "Валера", "+7(905) 999-20-20"),
+                Arguments.of(List.of("Валера"), "Валера", "+7(905) 999-10-12", "Валера", "+7(905) 999-20-20")
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("sourcePrintNames")
+    void printAllNames(List<String> names, String name1, String number1, String name2, String number2 ) {
+        phoneBook.add(name1, number1);
+        phoneBook.add(name2, number2);
+        setUp(names, equals(phoneBook.printAllNames()));
     }
 }
