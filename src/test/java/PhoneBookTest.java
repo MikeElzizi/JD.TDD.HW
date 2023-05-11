@@ -46,4 +46,17 @@ public class PhoneBookTest {
         phoneBook.add(name2, number2);
         Assertions.assertEquals(expected, phoneBook.findByNumber(number1));
     }
+    public static Stream<Arguments> sourceFindByName() {
+        return Stream.of(
+                Arguments.of("+7(905) 999-10-12", "Валера", "+7(905) 999-10-12", "Игорь", "+7(905) 999-10-12"),
+                Arguments.of("+7(905) 999-20-20", "Валера", "+7(905) 999-20-20", "Валера", "+7(905) 999-20-20")
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("sourceFindByName")
+    void findByName_test(String expected, String name1, String number1, String name2, String number2) {
+        phoneBook.add(name1, number1);
+        phoneBook.add(name2, number2);
+        Assertions.assertEquals(expected, phoneBook.findByName(name1));
+    }
 }
