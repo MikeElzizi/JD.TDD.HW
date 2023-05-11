@@ -1,10 +1,9 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class PhoneBook {
-    private int PhoneBook;
-
     Map<String, String> phone = new TreeMap<>();
     public int add(String name, String number) {
         if (!phone.containsKey(name)) {
@@ -19,6 +18,10 @@ public class PhoneBook {
         return phone.get(name);
     }
     public List<String> printAllNames() {
-        return null;
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<String, String> entry : phone.entrySet()) {
+            list.add(entry.getKey());
+        }
+        return list;
     }
 }

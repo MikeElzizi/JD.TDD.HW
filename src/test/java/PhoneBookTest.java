@@ -1,3 +1,5 @@
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ import java.util.stream.Stream;
 public class PhoneBookTest {
     PhoneBook phoneBook;
     @BeforeEach
-    void setUp(List<String> names, boolean equals) {
+    void setUp() {
         System.out.println("Начало теста");
          phoneBook = new PhoneBook();
     }
@@ -72,6 +74,6 @@ public class PhoneBookTest {
     void printAllNames(List<String> names, String name1, String number1, String name2, String number2 ) {
         phoneBook.add(name1, number1);
         phoneBook.add(name2, number2);
-        setUp(names, equals(phoneBook.printAllNames()));
+        MatcherAssert.assertThat(names, Matchers.is(phoneBook.printAllNames()));
     }
 }
